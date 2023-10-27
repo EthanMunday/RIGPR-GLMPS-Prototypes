@@ -36,7 +36,8 @@ public class PlacedBlock : MonoBehaviour
             {
                 centralPoint += v;
             }
-            centralPoint = centralPoint / closeBlocks.Count;
+            centralPoint += transform.position;
+            centralPoint = centralPoint / (closeBlocks.Count + 1);
             Instantiate(checkSphere,centralPoint,Quaternion.identity);
         }
     }
