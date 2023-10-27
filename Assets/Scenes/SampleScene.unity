@@ -641,6 +641,9 @@ MonoBehaviour:
   block: {fileID: 6910598752738474003, guid: dc6eb21a3b2a6534286c0a945986a098, type: 3}
   agent: {fileID: 1036927059}
   surface: {fileID: 247438370}
+  SynergySpheres:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!4 &2047665769
 Transform:
   m_ObjectHideFlags: 0

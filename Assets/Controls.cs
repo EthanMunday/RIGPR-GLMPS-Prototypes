@@ -11,6 +11,7 @@ public class Controls : MonoBehaviour
     [SerializeField] GameObject block;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] NavMeshSurface surface;
+    [SerializeField] LayerMask SynergySpheres;
     bool meshUpdate = false;
 
     void Update()
@@ -19,13 +20,15 @@ public class Controls : MonoBehaviour
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit) && hit.transform == plane)
+            if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform == plane)
             {
                 Vector3 targetPos = hit.point;
+                targetPos.x = Mathf.Round(targetPos.x);
                 targetPos.y += 0.5f;
+                targetPos.z = Mathf.Round(targetPos.z);
                 Instantiate(block, targetPos, Quaternion.identity);
             }
-            else if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.CompareTag("Block"))
+            else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
             {
                 Destroy(hit.transform.gameObject);
             }
@@ -35,7 +38,7 @@ public class Controls : MonoBehaviour
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit) && hit.transform == plane)
+            if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform == plane)
             {
                 agent.SetDestination(hit.point);
             }
