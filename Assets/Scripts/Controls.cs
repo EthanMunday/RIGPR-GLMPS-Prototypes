@@ -33,7 +33,8 @@ public class Controls : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
             {
-                Destroy(hit.transform.gameObject);
+                DestroyImmediate(hit.transform.gameObject);
+                FindFirstObjectByType<ZoneCreator>().RefreshZones();
             }
             meshUpdate = true;
         }
