@@ -62,11 +62,6 @@ public class PlacedBlock : MonoBehaviour
                     maxZ = v.z;
                 }
             }
-<<<<<<< Updated upstream
-            centralPoint += transform.position;
-            centralPoint = centralPoint / (closeBlocks.Count + 1);
-            Instantiate(checkSphere,centralPoint,Quaternion.identity);
-=======
             float difX = maxX - minX;
             float difZ = maxZ - minZ;
             Debug.Log(difX + " z " + difZ);
@@ -82,7 +77,6 @@ public class PlacedBlock : MonoBehaviour
             centralPoint = centralPoint / (closeBlocks.Count + 1);
             GameObject theSphere = Instantiate(checkSphere,centralPoint,Quaternion.identity);
             theSphere.transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
->>>>>>> Stashed changes
         }
     }
-}
+}   
