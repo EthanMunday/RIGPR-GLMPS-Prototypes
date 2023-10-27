@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 1611180862014811796}
   - component: {fileID: 5921218495081390097}
   - component: {fileID: 584348410323754439}
+  - component: {fileID: 7079032628043515074}
   m_Layer: 0
-  m_Name: Block
+  m_Name: WhiteBlock
   m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dbf55980815dd1a47ad3862c2fa6166a, type: 2}
+  - {fileID: 2100000, guid: ac3fa9d5d6442264d990ebfa6d66ced3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,3 +120,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkSphere: {fileID: 9150384903115844170, guid: 680122ad1fe493e409c1040abeef20fd, type: 3}
+--- !u!114 &7079032628043515074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910598752738474003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b6a071cb691aa458a810b76875677c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: 

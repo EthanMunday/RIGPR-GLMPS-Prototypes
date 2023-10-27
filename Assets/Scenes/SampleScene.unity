@@ -638,7 +638,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plane: {fileID: 176963975}
   cam: {fileID: 963194227}
-  block: {fileID: 6910598752738474003, guid: dc6eb21a3b2a6534286c0a945986a098, type: 3}
+  redBlock: {fileID: 6910598752738474003, guid: dc6eb21a3b2a6534286c0a945986a098, type: 3}
+  blueBlock: {fileID: 6910598752738474003, guid: 4ed01eec7c267b541adb2a24cc14bd53, type: 3}
+  yellowBlock: {fileID: 6910598752738474003, guid: 654c4e1d15c022944b9467d1c7ab26de, type: 3}
+  whiteBlock: {fileID: 6910598752738474003, guid: 8057a0d84fbaf0245898ef4831515dfb, type: 3}
   agent: {fileID: 1036927059}
   surface: {fileID: 247438370}
   SynergySpheres:

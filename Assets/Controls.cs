@@ -8,7 +8,10 @@ public class Controls : MonoBehaviour
 {
     [SerializeField] Transform plane;
     [SerializeField] Camera cam;
-    [SerializeField] GameObject block;
+    [SerializeField] GameObject redBlock;
+    [SerializeField] GameObject blueBlock;
+    [SerializeField] GameObject yellowBlock;
+    [SerializeField] GameObject whiteBlock;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] NavMeshSurface surface;
     [SerializeField] LayerMask SynergySpheres;
@@ -26,7 +29,7 @@ public class Controls : MonoBehaviour
                 targetPos.x = Mathf.Round(targetPos.x);
                 targetPos.y += 0.5f;
                 targetPos.z = Mathf.Round(targetPos.z);
-                Instantiate(block, targetPos, Quaternion.identity);
+                placeBlockBasedOnKeyDown(targetPos);
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
             {
@@ -42,6 +45,31 @@ public class Controls : MonoBehaviour
             {
                 agent.SetDestination(hit.point);
             }
+        }
+    }
+
+    void placeBlockBasedOnKeyDown(Vector3 targetPos)
+    {
+        GameObject theBlock;
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            theBlock = Instantiate(redBlock, targetPos, Quaternion.identity);
+            theBlock.GetComponent<BlockInformation>().colour = "Red";
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            theBlock = Instantiate(blueBlock, targetPos, Quaternion.identity);
+            theBlock.GetComponent<BlockInformation>().colour = "Blue";
+        }
+        else if (Input.GetKey(KeyCode.Alpha3))
+        {
+            theBlock = Instantiate(yellowBlock, targetPos, Quaternion.identity);
+            theBlock.GetComponent<BlockInformation>().colour = "Yellow";
+        }
+        else
+        {
+            theBlock = Instantiate(whiteBlock, targetPos, Quaternion.identity);
+            theBlock.GetComponent<BlockInformation>().colour = "White";
         }
     }
     void LateUpdate()
