@@ -15,6 +15,11 @@ public class Controls : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
     [SerializeField] NavMeshSurface surface;
     [SerializeField] LayerMask SynergySpheres;
+
+    [SerializeField] public SynergyCheck SynergyChecking;
+
+
+    [SerializeField] GameObject Blocks;
     bool meshUpdate = false;
 
     void Update()
@@ -33,7 +38,11 @@ public class Controls : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
             {
+
+                string currentTag = hit.transform.gameObject.GetComponent<BlockInformation>().colour;
                 Destroy(hit.transform.gameObject);
+
+                SynergyChecking.UpdateZone(currentTag,3.0f);
             }
             meshUpdate = true;
         }
@@ -51,26 +60,35 @@ public class Controls : MonoBehaviour
     void placeBlockBasedOnKeyDown(Vector3 targetPos)
     {
         GameObject theBlock;
+        string currentTag;
         if (Input.GetKey(KeyCode.Alpha1))
         {
             theBlock = Instantiate(redBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "Red";
+
+
+            currentTag = "Red";
+            theBlock.transform.parent = Blocks.transform; 
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
             theBlock = Instantiate(blueBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "Blue";
+            currentTag = "Blue";
+            theBlock.transform.parent = Blocks.transform; 
         }
         else if (Input.GetKey(KeyCode.Alpha3))
         {
             theBlock = Instantiate(yellowBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "Yellow";
+            currentTag = "Yellow";
+            theBlock.transform.parent = Blocks.transform; 
         }
         else
         {
             theBlock = Instantiate(whiteBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "White";
+           currentTag = "White";
+            theBlock.transform.parent = Blocks.transform; 
         }
+        theBlock.GetComponent<BlockInformation>().colour = currentTag;
+        SynergyChecking.UpdateZone(currentTag, 3.0f);
     }
     void LateUpdate()
     {
