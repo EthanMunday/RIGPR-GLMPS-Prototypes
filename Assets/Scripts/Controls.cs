@@ -15,6 +15,8 @@ public class Controls : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
     [SerializeField] NavMeshSurface surface;
     [SerializeField] LayerMask SynergySpheres;
+
+    string currentTag;
     bool meshUpdate = false;
 
     void Update()
@@ -33,8 +35,9 @@ public class Controls : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
             {
+                currentTag = hit.transform.GetComponent<BlockInformation>().colour;
                 DestroyImmediate(hit.transform.gameObject);
-                FindFirstObjectByType<ZoneCreator>().RefreshZones();
+                FindFirstObjectByType<ZoneCreator>().RefreshZones(currentTag);
             }
             meshUpdate = true;
         }
@@ -56,22 +59,28 @@ public class Controls : MonoBehaviour
         {
             theBlock = Instantiate(redBlock, targetPos, Quaternion.identity);
             theBlock.GetComponent<BlockInformation>().colour = "Red";
+            currentTag = "Red";
+
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
             theBlock = Instantiate(blueBlock, targetPos, Quaternion.identity);
             theBlock.GetComponent<BlockInformation>().colour = "Blue";
+            currentTag = "Blue";
         }
         else if (Input.GetKey(KeyCode.Alpha3))
         {
             theBlock = Instantiate(yellowBlock, targetPos, Quaternion.identity);
             theBlock.GetComponent<BlockInformation>().colour = "Yellow";
+            currentTag = "Yellow";
         }
         else
         {
             theBlock = Instantiate(whiteBlock, targetPos, Quaternion.identity);
             theBlock.GetComponent<BlockInformation>().colour = "White";
+            currentTag = "White";
         }
+        FindFirstObjectByType<ZoneCreator>().RefreshZones(currentTag);
     }
     void LateUpdate()
     {

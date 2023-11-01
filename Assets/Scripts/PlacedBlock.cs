@@ -7,26 +7,20 @@ using UnityEngine.UIElements;
 
 public class PlacedBlock : MonoBehaviour
 {
-    void Start()
-    {
-        FindFirstObjectByType<ZoneCreator>().RefreshZones();
-    }
-
+    float radius = 3.0f;
     public void ContainsList(ref List<PlacedBlock> currentList)
     {
         currentList.Add(this);
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3);
+        List<PlacedBlock> blocks = new List<PlacedBlock>(FindObjectsOfType<PlacedBlock>());
         string currentTag = GetComponent<BlockInformation>().colour;
-        foreach (var hitCollider in hitColliders)
+        foreach (var currentBlock in blocks)
         {
-            if (hitCollider.CompareTag("Block") && hitCollider.transform.position - transform.position != Vector3.zero)
-            {
-                string checkTag = hitCollider.GetComponent<BlockInformation>().colour;
-                if (checkTag != currentTag) continue;
-                PlacedBlock checkBlock = hitCollider.GetComponent<PlacedBlock>();
-                if (currentList.Contains(checkBlock)) continue;
-                checkBlock.ContainsList(ref currentList);
-            }
+            float distance = Vector3.Distance(currentBlock.transform.position, transform.position);
+            string checkTag = currentBlock.GetComponent<BlockInformation>().colour;
+            if (distance > radius || distance == 0.0f) continue;
+            if (checkTag != currentTag) continue;
+            if (currentList.Contains(currentBlock)) continue;
+            currentBlock.ContainsList(ref currentList);
         }
     }
 }   

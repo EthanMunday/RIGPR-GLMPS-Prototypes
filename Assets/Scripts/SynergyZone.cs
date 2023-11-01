@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SynergyZone : MonoBehaviour
@@ -10,46 +11,24 @@ public class SynergyZone : MonoBehaviour
     public void UpdateSphere()
     {
         Vector3 centralPoint = transform.position;
-        float minX = transform.position.x;
-        float maxX = transform.position.x;
-        float minZ = transform.position.z;
-        float maxZ = transform.position.z;
-        float sphereScale = 0;
+        float maxDistance = 0f;
         foreach (GameObject currentObject in artifacts)
         {
             Vector3 v = currentObject.transform.position;
             centralPoint += v;
-            if (minX > v.x)
-            {
-                minX = v.x;
-            }
-            else if (maxX < v.x)
-            {
-                maxX = v.x;
-            }
-            if (minZ > v.z)
-            {
-                minZ = v.z;
-            }
-            else if (maxZ < v.z)
-            {
-                maxZ = v.z;
-            }
         }
-        float difX = maxX - minX;
-        float difZ = maxZ - minZ;
-        //Debug.Log(difX + " z " + difZ);
-        if (difX >= difZ)
+        transform.position = centralPoint / artifacts.Count;
+
+        foreach (GameObject currentObject in artifacts)
         {
-            sphereScale = difX * 2;
+            float f = Vector3.Distance(currentObject.transform.position, transform.position);
+            if (f > maxDistance) maxDistance = f;
         }
-        else
-        {
-            sphereScale = difZ * 2;
-        }
+        maxDistance += 0.5f;
+        maxDistance *= 2;
+        maxDistance += 1f;
         //Debug.Log(sphereScale);
-        transform.position = centralPoint / (artifacts.Count + 1);
-        transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
+        transform.localScale = new Vector3(maxDistance, maxDistance, maxDistance);
     }
 
     public SynergyZone()
