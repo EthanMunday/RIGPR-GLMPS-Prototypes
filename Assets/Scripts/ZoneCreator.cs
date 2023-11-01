@@ -7,6 +7,7 @@ public class ZoneCreator : MonoBehaviour
     [SerializeField] GameObject checkSphere;
     public void RefreshZones()
     {
+
         foreach(SynergyZone synergyZone in FindObjectsOfType<SynergyZone>())
         {
             Destroy(synergyZone.gameObject);
@@ -30,10 +31,7 @@ public class ZoneCreator : MonoBehaviour
 
             List<PlacedBlock> newZoneList = new List<PlacedBlock>();
             blockArray[0].ContainsList(ref newZoneList);
-            for (int i = 0; i < newZoneList.Count; i++)
-            {
-                blockArray.Remove(newZoneList[i]);
-            }
+            newZoneList.ForEach(block => blockArray.Remove(block));
             if (newZoneList.Count < 3) continue;
             sortedBlocks.Add(newZoneList);
         }
@@ -43,10 +41,7 @@ public class ZoneCreator : MonoBehaviour
             GameObject newSphere = Instantiate(checkSphere, sortedBlocks[i][0].transform.position, Quaternion.identity);
             SynergyZone newZone = newSphere.GetComponent<SynergyZone>();
             newZone.artifactType = sortedBlocks[i][0].GetComponent<BlockInformation>().colour;
-            foreach(PlacedBlock block in sortedBlocks[i])
-            {
-                newZone.artifacts.Add(block.gameObject);
-            }
+            sortedBlocks[i].ForEach(block => Destroy(block.gameObject));
             newZone.UpdateSphere();
         }
     }
