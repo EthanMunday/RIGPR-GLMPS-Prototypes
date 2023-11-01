@@ -38,7 +38,7 @@ public class SynergyZone : MonoBehaviour
         }
         float difX = maxX - minX;
         float difZ = maxZ - minZ;
-        Debug.Log(difX + " z " + difZ);
+        //Debug.Log(difX + " z " + difZ);
         if (difX >= difZ)
         {
             sphereScale = difX * 2;
@@ -47,7 +47,7 @@ public class SynergyZone : MonoBehaviour
         {
             sphereScale = difZ * 2;
         }
-        Debug.Log(sphereScale);
+        //Debug.Log(sphereScale);
         transform.position = centralPoint / (artifacts.Count + 1);
         transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
     }

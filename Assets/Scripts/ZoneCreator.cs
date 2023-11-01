@@ -7,7 +7,6 @@ public class ZoneCreator : MonoBehaviour
     [SerializeField] GameObject checkSphere;
     public void RefreshZones()
     {
-
         foreach(SynergyZone synergyZone in FindObjectsOfType<SynergyZone>())
         {
             Destroy(synergyZone.gameObject);
@@ -41,7 +40,7 @@ public class ZoneCreator : MonoBehaviour
             GameObject newSphere = Instantiate(checkSphere, sortedBlocks[i][0].transform.position, Quaternion.identity);
             SynergyZone newZone = newSphere.GetComponent<SynergyZone>();
             newZone.artifactType = sortedBlocks[i][0].GetComponent<BlockInformation>().colour;
-            sortedBlocks[i].ForEach(block => Destroy(block.gameObject));
+            sortedBlocks[i].ForEach(block => newZone.artifacts.Add(block.gameObject));
             newZone.UpdateSphere();
         }
     }
