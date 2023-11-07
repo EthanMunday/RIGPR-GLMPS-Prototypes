@@ -17,7 +17,7 @@ public class ZoneCreator : MonoBehaviour
 
         foreach (PlacedBlock block in FindObjectsOfType<PlacedBlock>())
         {
-            if (block.GetComponent<BlockInformation>().colour == colour) continue;
+            if (block.artefactData.artefactType == colour) continue;
             blockArray.Remove(block);
         }
         List<List<PlacedBlock>> sortedBlocks = new List<List<PlacedBlock>>();
@@ -46,7 +46,7 @@ public class ZoneCreator : MonoBehaviour
         {
             GameObject newSphere = Instantiate(checkSphere, Vector3.zero, Quaternion.identity);
             SynergyZone newZone = newSphere.GetComponent<SynergyZone>();
-            newZone.artifactType = sortedBlocks[i][0].GetComponent<BlockInformation>().colour;
+            newZone.artifactType = sortedBlocks[i][0].artefactData.artefactType;
             sortedBlocks[i].ForEach(block => newZone.artifacts.Add(block.gameObject));
             newZone.UpdateSphere();
         }

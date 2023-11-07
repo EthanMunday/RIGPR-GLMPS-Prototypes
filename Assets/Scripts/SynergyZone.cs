@@ -10,6 +10,11 @@ public class SynergyZone : MonoBehaviour
 
     public void UpdateSphere()
     {
+        foreach (GameObject currentObject in artifacts)
+        {
+            PlacedBlock block = currentObject.GetComponent<PlacedBlock>();
+            block.synergyZone = this;
+        }
         Vector3 centralPoint = transform.position;
         float maxDistance = 0f;
         foreach (GameObject currentObject in artifacts)

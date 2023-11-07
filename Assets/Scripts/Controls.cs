@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -35,7 +36,7 @@ public class Controls : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
             {
-                currentTag = hit.transform.GetComponent<BlockInformation>().colour;
+                currentTag = hit.transform.GetComponent<PlacedBlock>().artefactData.artefactType;
                 DestroyImmediate(hit.transform.gameObject);
                 FindFirstObjectByType<ZoneCreator>().RefreshZones(currentTag);
             }
@@ -50,6 +51,16 @@ public class Controls : MonoBehaviour
                 agent.SetDestination(hit.point);
             }
         }
+        if (Input.GetMouseButtonDown(2))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, float.PositiveInfinity, ~SynergySpheres) && hit.transform.gameObject.CompareTag("Block"))
+            {
+                PlacedBlock currentBlock = hit.transform.GetComponent<PlacedBlock>();
+                Debug.Log("Current Block: " +  currentBlock.artefactData.artefactName + " Current Value: " + currentBlock.GetValue());
+            }
+        }
     }
 
     void placeBlockBasedOnKeyDown(Vector3 targetPos)
@@ -58,28 +69,21 @@ public class Controls : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1))
         {
             theBlock = Instantiate(redBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "Red";
-            currentTag = "Red";
-
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
             theBlock = Instantiate(blueBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "Blue";
-            currentTag = "Blue";
         }
         else if (Input.GetKey(KeyCode.Alpha3))
         {
             theBlock = Instantiate(yellowBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "Yellow";
-            currentTag = "Yellow";
         }
         else
         {
             theBlock = Instantiate(whiteBlock, targetPos, Quaternion.identity);
-            theBlock.GetComponent<BlockInformation>().colour = "White";
-            currentTag = "White";
         }
+        if (theBlock.GetComponent<PlacedBlock>().artefactData == null) return; 
+        currentTag = theBlock.GetComponent<PlacedBlock>().artefactData.artefactType;
         FindFirstObjectByType<ZoneCreator>().RefreshZones(currentTag);
     }
     void LateUpdate()
